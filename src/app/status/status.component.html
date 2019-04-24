@@ -1,0 +1,346 @@
+
+<div style="height: 100vh;">
+
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
+        <button mat-button type="button"> <img class="brand_img" src="../assets/images/logoQos-iot_white.png" alt=""> </button>
+
+
+      <span class="spacer"></span>
+
+      <div fxShow="true" fxHide.lt-md="true">
+
+        <!-- The following menu items will be hidden on both SM and XS screen sizes -->
+
+        <button mat-icon-button><mat-icon>notifications</mat-icon></button>
+        <!-- <mat-chip-list>
+          <mat-chip color="accent" selected="true">5</mat-chip>
+        </mat-chip-list> -->
+        <button mat-icon-button [matMenuTriggerFor]="profile"> <img src= "{{ BASE_URL }}{{ user_account.avatar }}" class="avatar-img" alt=""> </button>
+        <mat-menu #profile="matMenu">
+          <button mat-menu-item>
+            <mat-icon>lock</mat-icon>
+            <span>Lock</span>
+          </button>
+          <button mat-menu-item >
+            <mat-icon>exit_to_app</mat-icon>
+            <span (click)="onLogout()" >Logout</span>
+          </button>
+        </mat-menu>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <mat-icon>dialpad</mat-icon>
+            <span>Test</span>
+          </button>
+          <button mat-menu-item >
+            <mat-icon>voicemail</mat-icon>
+            <span>Test</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>notifications_off</mat-icon>
+            <span>Test</span>
+          </button>
+        </mat-menu>
+
+
+      </div>
+
+        <div fxShow="true" fxHide.gt-sm>
+
+          <button href="#" mat-button (click)="sidenav.toggle()">Show Side Menu</button>
+
+        </div>
+    </mat-toolbar-row >
+
+    <mat-toolbar-row fxShow="true" fxHide.gt-sm fxLayout="row" fxLayoutAlign="space-around center">
+
+      <button href="#" mat-button>Contact</button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-sidenav-container fxFlexFill class="sidenav-menu">
+
+    <mat-sidenav #sidenav fxLayout="column" mode="over">
+
+      <mat-nav-list>
+        <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <img mat-list-icon src= "{{ BASE_URL }}{{ user_account.avatar }}" alt="" style="width:40px; height:40px;">
+                </mat-panel-title>
+                <mat-panel-description>
+                  <h4 mat-line>{{ user_account.username }}</h4>
+                  <!-- <p mat-line>{{ user_account.email }}</p> -->
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-nav-list>
+                <mat-list-item>
+                  <mat-icon mat-list-icon>person</mat-icon>
+                  View Profile
+              </mat-list-item>
+                <mat-list-item>
+                  <mat-icon mat-list-icon>settings</mat-icon>
+                   Settings
+              </mat-list-item>
+                <mat-list-item>
+                  <mat-icon mat-list-icon>exit_to_app</mat-icon>
+                  Logout
+              </mat-list-item>
+              </mat-nav-list>
+            </mat-expansion-panel>
+        <mat-list-item >
+           <mat-icon mat-list-icon>home</mat-icon>
+            Home
+        </mat-list-item>
+        <mat-list-item >
+           <mat-icon mat-list-icon>phonelink_ring</mat-icon>
+            Devices
+        </mat-list-item>
+        <mat-list-item >
+           <mat-icon mat-list-icon>assignment</mat-icon>
+            Selections
+        </mat-list-item>
+        <mat-list-item >
+           <mat-icon mat-list-icon>assessment</mat-icon>
+            Summary
+        </mat-list-item>
+        <mat-list-item >
+           <mat-icon mat-list-icon>date_range</mat-icon>
+            Weekly
+        </mat-list-item>
+        <mat-list-item >
+           <mat-icon mat-list-icon>today</mat-icon>
+            Daily
+        </mat-list-item>
+      </mat-accordion>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content fxFlexFill>
+      <mat-grid-list cols="3">
+
+        <mat-grid-tile [colspan]="1" [rowspan]="1" >
+          <mat-card class="example-card " >
+            <mat-card-header >
+                <button mat-card-avatar mat-icon-button (click)="navigateDevice()" >
+                  <mat-icon mat-card-avatar class="white-icon" [style.background]="'#00bcd4'" >phonelink_ring</mat-icon>
+                </button>
+                <mat-card-title >Devices</mat-card-title>
+                <mat-card-subtitle>Latest devices</mat-card-subtitle>
+
+            </mat-card-header>
+            <hr>
+            <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+            <mat-card-content>
+              <mat-nav-list>
+                <mat-list-item *ngFor="let device of devices">
+                  <h6 matLine >{{device.device_id}}</h6>
+                  <!-- <p>Description</p> -->
+                  <mat-chip-list>
+                    <mat-chip color="accent" selected="true">{{device.label}}</mat-chip>
+                  </mat-chip-list>
+                  <p mat-line>updated {{device.last_modification}}</p>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+
+              </mat-nav-list>
+              <mat-card-actions>
+
+                  <button mat-button (click)="navigateDevice()" style="display:block; margin-left:auto; margin-right:auto;"> View all </button>
+
+              </mat-card-actions>
+            </mat-card-content>
+          </mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+          <mat-card class="example-card">
+            <mat-card-header >
+              <mat-icon mat-card-avatar class="white-icon" [style.background]="'#E91E63'" >assignment</mat-icon>
+              <mat-card-title>Selections</mat-card-title>
+              <mat-card-subtitle>Latest selections</mat-card-subtitle>
+            </mat-card-header>
+            <hr>
+            <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+            <mat-card-content>
+              <mat-nav-list>
+                <mat-list-item >
+                  <h6 matLine >Selection 1 </h6>
+
+                    <mat-chip color="warn" selected="true">preprod</mat-chip>
+
+                  <p mat-line>Jan 1,2018 to Fev 4,2018</p>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item >
+                  <h6 matLine >Selection 2 </h6>
+
+                    <mat-chip color="warn" selected="true">preprod</mat-chip>
+
+                  <p mat-line>Jan 1,2018 to Fev 4,2018</p>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item >
+                  <h6 matLine >Selection 3 </h6>
+
+                    <mat-chip color="warn" selected="true">preprod</mat-chip>
+
+                  <p mat-line>Jan 1,2018 to Fev 4,2018</p>
+                </mat-list-item>
+              </mat-nav-list>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button style="display:block; margin-left:auto; margin-right:auto;"> View all </button>
+            </mat-card-actions>
+          </mat-card>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+          <mat-card class="example-card">
+            <mat-card-header >
+              <mat-icon mat-card-avatar class="white-icon" [style.background]="'#673AB7'" >today</mat-icon>
+              <mat-card-title>Daily</mat-card-title>
+              <mat-card-subtitle>Measure date: 2017-09-29</mat-card-subtitle>
+            </mat-card-header>
+            <hr>
+            <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+            <mat-card-content>
+              <mat-tab-group>
+                <mat-tab label="Transmission">
+                  <div *ngIf="chart">
+                    <canvas id="dailyChart" #dailyChart> {{ chart }}</canvas>
+                  </div>
+                </mat-tab>
+                <mat-tab label="Rssi">
+                  <div *ngIf="chart">
+                    <canvas id="rssiChart" #rssiChart> {{ chart }}</canvas>
+                  </div>
+                </mat-tab>
+                <mat-tab label="Snr">
+                  <div *ngIf="chart">
+                    <canvas  id="snrChart" #snrChart> {{ chart }}</canvas>
+                  </div>
+                </mat-tab>
+              </mat-tab-group>
+
+            </mat-card-content>
+            <mat-card-actions>
+              <!-- <button mat-button style="display:block; margin-left:auto; margin-right:auto;"> View details </button> -->
+            </mat-card-actions>
+          </mat-card>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="2" [rowspan]="1.5">
+          <mat-card class="example-card">
+            <mat-card-header >
+              <mat-icon mat-card-avatar class="white-icon" [style.background]="'#FFC107'" >assessment</mat-icon>
+              <mat-card-title>Summary</mat-card-title>
+              <mat-card-subtitle>Latest Summary</mat-card-subtitle>
+            </mat-card-header>
+            <hr>
+            <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+            <mat-card-content>
+              <mat-tab-group>
+                <mat-tab label="Network view">
+                  <div fxLayout="column" fxLayoutAlign="space-between center" >
+                    <div fxLayout="row" fxLayoutAlign="space-around center" >
+                      <div *ngIf="chart">
+                        <canvas id="summaryChart1" > {{ chart }}</canvas>
+                      </div>
+                      <div *ngIf="chart">
+                        <canvas id="summaryChart2" > {{ chart }}</canvas>
+                      </div>
+                      <div *ngIf="chart">
+                        <canvas id="summaryChart3" > {{ chart }}</canvas>
+                      </div>
+                    </div>
+
+                  <mat-chip-list class="mat-chip-list-stacked" style="bottom:1px">
+                    <mat-chip color="accent" selected="true">
+
+                      Perte très satisfaisant ( 4,3% ) sur Objenious
+
+                    </mat-chip>
+                    <mat-chip color="accent" selected="true">
+                      Sigfox en tête
+                    </mat-chip>
+                  </mat-chip-list>
+                </div>
+                </mat-tab>
+
+                <mat-tab label="Device view">
+                  <mat-grid-list cols="4">
+                    <mat-grid-tile [colspan]="2" [rowspan]="2">
+                      <div *ngIf="chart" >
+                        <canvas id="deviceChart" #deviceChart width="200px" height="200px"> {{ chart }}</canvas>
+                      </div>
+                    </mat-grid-tile>
+
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                      <div >
+                        <canvas id="deviceChart1" #deviceChart1> {{ chart }}</canvas>
+                      </div>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                      <div >
+                        <canvas id="deviceChart2" #deviceChart2> {{ chart }}</canvas>
+                      </div>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                      <div >
+                        <canvas id="deviceChart3" #deviceChart3> {{ chart }}</canvas>
+                      </div>
+                    </mat-grid-tile>
+                  </mat-grid-list>
+
+                </mat-tab>
+              </mat-tab-group>
+
+            </mat-card-content>
+            <mat-card-actions>
+
+            </mat-card-actions>
+          </mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1.3">
+          <mat-card class="example-card">
+            <mat-card-header >
+              <mat-icon mat-card-avatar class="white-icon" [style.background]="'#880E4F'" >date_range</mat-icon>
+              <mat-card-title>Weekly</mat-card-title>
+              <mat-card-subtitle>Measure per week</mat-card-subtitle>
+            </mat-card-header>
+            <hr>
+            <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+            <mat-card-content>
+              <mat-tab-group>
+                <mat-tab label="Transmission">
+                  <div *ngIf="chart">
+                    <canvas id="weekChart" > {{ chart }}</canvas>
+                  </div>
+                </mat-tab>
+                <mat-tab label="Reception duration">
+
+                </mat-tab>
+                <mat-tab label="SNR">
+
+                </mat-tab>
+                <mat-tab label="RSSI">
+
+                </mat-tab>
+              </mat-tab-group>
+            </mat-card-content>
+            <mat-card-actions>
+
+            </mat-card-actions>
+          </mat-card>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
+
+</div>

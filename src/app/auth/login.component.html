@@ -1,0 +1,93 @@
+<div style="height: 100vh;">
+
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <button mat-button type="button" (click)="goHome();"> <img class="brand_img" src="../assets/images/logoQos-iot_white.png" alt=""> </button>
+
+
+      <span class="spacer"></span>
+
+      <div fxShow="true" fxHide.lt-md="true">
+
+        <!-- The following menu items will be hidden on both SM and XS screen sizes -->
+
+        <!-- <mat-chip-list>
+          <mat-chip color="accent" selected="true">5</mat-chip>
+        </mat-chip-list> -->
+        <button href="#" mat-button>Register</button>
+
+        <button href="#" mat-button>Contact</button>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <mat-icon>dialpad</mat-icon>
+            <span>Test</span>
+          </button>
+          <button mat-menu-item >
+            <mat-icon>voicemail</mat-icon>
+            <span>Test</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>notifications_off</mat-icon>
+            <span>Test</span>
+          </button>
+        </mat-menu>
+
+
+      </div>
+
+    </mat-toolbar-row >
+
+    <mat-toolbar-row color="accent" fxShow="true" fxHide.gt-sm fxLayout="row" fxLayoutAlign="space-around center">
+      <button href="#" mat-button>Register</button>
+
+      <button href="#" mat-button>Contact</button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div class="body">
+      <div class="content row justify-content-center align-items-center">
+        <div class=" col-sm-4 col-md-4" >
+          <mat-card class="example-card">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <mat-card-title><h5>Login</h5></mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="login-card-content">
+              <form class="example-container" (ngSubmit)="onLogin()" novalidate>
+                <mat-form-field>
+                  <input matInput placeholder="Enter your email" id="email" [(ngModel)]="user.email" name="email" [formControl]="emailFormControl" [errorStateMatcher]="matcher" required>
+                    <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+                    <!-- <mat-error *ngIf="!emailAndPasswordValid">
+                     Please check your email address
+                   </mat-error> -->
+                    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                     Please enter a valid email address
+                   </mat-error>
+
+                   <mat-error *ngIf="emailFormControl.hasError('required')">
+                     Email is <strong>required</strong>
+                   </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                 <input matInput placeholder="Enter your password" [type]="hide ? 'password' : 'text'" id="password" [(ngModel)]="user.password" #password="ngModel" name="password" required>
+                 <!-- <mat-error *ngIf="!emailAndPasswordValid">
+                  Please check your password
+                </mat-error> -->
+                 <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                  Please enter a valid password
+                </mat-error>
+                 <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+               </mat-form-field>
+               <button mat-raised-button color="primary" type="submit">Enter</button>
+
+               </form>
+            </mat-card-content>
+
+          </mat-card>
+        </div>
+      </div>
+    </div>
+</div>
